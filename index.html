@@ -616,10 +616,13 @@
                     nodeColors[root.node] = {'color': nbColors};
                     tour.push(u);
                     vertexHighlighted[root.node] = true;
+                    iVL[root.node].extratext = colorList[nbColors];
                     cs = createState({
                         iVL: iVL,
                         iEL: iEL,
-                        vertexHighlighted: vertexHighlighted
+                        vertexHighlighted: vertexHighlighted,
+                        edgeHighlighted: edgeHighlighted,
+                        edgeAnimated: []
                     });
                     cs['status'] = 'set root node for current iteration (' + currentIteration + '), selected node: ' + root.node;
                     cs['lineNo'] = 3;
@@ -631,20 +634,21 @@
                         var p = sortedNodes[i];
                         var conflict = false;
                         for (j = 0; !conflict && j < myGroup.length; j++) {
-                            tour.push(u);
                             var edgeKey = getEdgeKey(root.node, p.node);
-                            if (edgeKey != -1)
+                            if (edgeKey != -1) {
+                                tour.push(u);
                                 edgeHighlighted[edgeKey] = true;
-                            cs = createState({
-                                iVL: iVL,
-                                iEL: iEL,
-                                vertexHighlighted: vertexHighlighted,
-                                edgeHighlighted: edgeHighlighted,
-                                edgeAnimated: edgeKey != -1 ? edgeKey : []
-                            });
-                            cs['status'] = 'iterate over node (' + root.node + ') edges, current edge: from (' + root.node + ') to (' + p.node + ') , and check for color conflicts';
-                            cs['lineNo'] = [4, 5];
-                            stateList.push(cs);
+                                cs = createState({
+                                    iVL: iVL,
+                                    iEL: iEL,
+                                    vertexHighlighted: vertexHighlighted,
+                                    edgeHighlighted: edgeHighlighted,
+                                    edgeAnimated: edgeKey != -1 ? edgeKey : []
+                                });
+                                cs['status'] = 'iterate over node (' + root.node + ') edges, current edge: from (' + root.node + ') to (' + p.node + ') , and check for color conflicts';
+                                cs['lineNo'] = [4, 5];
+                                stateList.push(cs);
+                            }
                             conflict = getEdgeBetween(p, myGroup[j].node) != null;
                         }
 
@@ -670,20 +674,6 @@
                             stateList.push(cs);
                         }
                     }
-
-
-                    tour.push(u);
-                    iVL[root.node].extratext = colorList[nbColors];
-                    cs = createState({
-                        iVL: iVL,
-                        iEL: iEL,
-                        vertexHighlighted: vertexHighlighted,
-                        edgeHighlighted: edgeHighlighted,
-                        edgeAnimated: []
-                    });
-                    cs['status'] = 'set color: ' + colorList[nbColors] + ' to node: ' + root.node + (sortedNodes.length == 0 ? ', all edges visited:  iteration skipped' : '');
-                    cs['lineNo'] = 6;
-                    stateList.push(cs);
 
                     myGroup = [];
                     nbColors++;
@@ -817,10 +807,10 @@
                 case 'welshPowell':
                     codes.push('function welshPowell(Graph)');
                     codes.push('&nbsp;sort vertices according to degree values');
-                    codes.push('&nbsp;set root node');
+                    codes.push('&nbsp;set root node & add color');
                     codes.push('&nbsp;iterate over each node and its unvisited edges');
                     codes.push('&nbsp;&nbsp;check for conflicts');
-                    codes.push('&nbsp;add color');
+                    codes.push('&nbsp;&nbsp;add color if there is a conflict');
                     codes.push('&nbsp;return number_Of_Colors');
                     codes.push('');
                     break;
