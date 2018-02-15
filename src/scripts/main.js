@@ -655,7 +655,7 @@ var GraphColoring = function () {
                             crossEdge,
                             forwardEdge
                         });
-                        cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is unvisited, we have a <font color="red">tree edge</font>.'.replace("{u}", u).replace("{v}", v);
+                        cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is unvisited, we have a tree edge.'.replace("{u}", u).replace("{v}", v);
                         cs["lineNo"] = 4;
                     }
                     else {
@@ -677,7 +677,7 @@ var GraphColoring = function () {
                             crossEdge,
                             forwardEdge
                         });
-                        cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is explored, we ignore this <font color="grey">non-tree edge</font>.'.replace("{u}", u).replace("{v}", v);
+                        cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is explored, we ignore this non-tree edge.'.replace("{u}", u).replace("{v}", v);
                         cs["lineNo"] = 5;
                     }
                     stateList.push(cs);
@@ -805,7 +805,7 @@ var GraphColoring = function () {
                         forwardEdge
                     });
                     cs["lineNo"] = [3];
-                    cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is unvisited, we have a <font color="red">tree edge</font>.'.replace("{u}", u).replace("{v}", v);
+                    cs["status"] = 'Try edge {u} → {v}<br>Vertex {v} is unvisited, we have a tree edge.'.replace("{u}", u).replace("{v}", v);
                     stateList.push(cs);
 
                     p[v] = u;
@@ -1026,7 +1026,7 @@ var GraphColoring = function () {
         }
 
         cs = createState({iVL, iEL, vertexHighlighted, edgeHighlighted, vertexTraversed, edgeTraversed, edgeQueued});
-        cs["status"] = "The highlighted vertices and edges form an MST with weight = " + totalWeight + ".<br><b><a href=\"https://cpbook.net/#downloads\" target=\"_blank\">ch4_03_kruskal_prim.cpp/java, ch4.zip, CP3</a></b>.";
+        cs["status"] = "The highlighted vertices and edges form an MST with weight = " + totalWeight;
         cs["lineNo"] = 7;
         stateList.push(cs);
 
@@ -1101,7 +1101,7 @@ var GraphColoring = function () {
 
             var newStatus = 'The current priority queue ' + ShowPQ();
             var frontitem = pq.shift(); // front most item
-            var dist = frontitem.getFirst(); // not used in original dijkstra
+            var dist = frontitem.getFirst();
             var f = frontitem.getSecond();
             vertexHighlighted[f] = true;
 
@@ -1529,7 +1529,6 @@ var GraphColoring = function () {
                 codes.push('&nbsp;iterate over each node and its unvisited edges');
                 codes.push('&nbsp;&nbsp;check for conflicts');
                 codes.push('&nbsp;&nbsp;add color if there is a conflict');
-                codes.push('&nbsp;return number_Of_Colors');
                 codes.push('');
                 break;
             case 'bfs':
@@ -1759,7 +1758,7 @@ function kruskal() {
 function dijkstra() {
     if (isPlaying) stop();
     var input = parseInt($('#dijkstra-v').val());
-    commonAction(mw.dijkstra(input,), ("OriginalDijkstra(" + input + ")"));
+    commonAction(mw.dijkstra(input,), ("Dijkstra(" + input + ")"));
     setTimeout(function () {
         $("#dijkstra-v").val(1 + Math.floor(Math.random() * mw.getV()));
     }, 500);
