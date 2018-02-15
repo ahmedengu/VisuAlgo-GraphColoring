@@ -1,0 +1,91 @@
+#e-lecture {
+  top: 45px;
+  right: 130px;
+  width: 400px;
+  display: block;
+  background: none;
+  overflow: normal;
+  white-space: normal;
+  text-align: right;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.electure-prev, .electure-next { /* force update, copied from viz.css */
+  position: absolute;
+  /* bottom: -12px; */
+  top: -20px;
+  bottom: '';
+  padding: 3px 8px;
+  background: #999;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.electure-prev {
+  left: -10px;
+  /* right: 30px; */
+}
+
+.electure-next {
+  right: -10px;
+  color: white;
+}
+
+.draw {
+  bottom: 200px;
+}
+
+.random {
+  bottom: 173px;
+}
+
+#random-err {
+  padding: 5px 8px;
+}
+
+.examples {
+  bottom: 124px;
+}
+
+.examples p {
+  padding: 5px 8px;
+}
+
+.welshPowell {
+  bottom: 119px;
+}
+
+#welshPowell-err {
+  padding: 5px 8px;
+}
+
+.dp {
+  bottom: 92px;
+}
+
+#dp-err {
+  padding: 5px 8px;
+}
+
+.approximation {
+  bottom: 65px;
+}
+
+#two_approximation-go p {
+  padding: 5px 8px;
+}
+
+#one_half_approximation-go p {
+  padding: 5px 8px;
+}
+
+#approximation-err {
+  padding: 5px 8px;
+}
+
+.btn{
+  padding: 5px 8px
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+  <title>Graph Coloring</title>
+  <link rel="stylesheet" type="text/css" href="fonts/silkscreen/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/common.css">
+  <link rel="stylesheet" href="stylesheets/viz-1.0.1.css">
+  <link rel="stylesheet" href="stylesheets/visual.css">
+  <link rel="stylesheet" href="stylesheets/drawgraph.css">
+  <link rel="stylesheet" href="stylesheets/main.css">
+</head>
+<body>
+<div id="dark-overlay"></div>
+<div id="status" class="panel">
+  <p></p>
+</div>
+<div id="status-hide" class="panel-hide">
+  <img src="images/arrow_white_right.png" alt=">" title="show/hide status panel"/>
+</div>
+<div id="codetrace" class="panel">
+  <p id="code1" style="padding-top: 10px;"></p>
+  <p id="code2"></p>
+  <p id="code3"></p>
+  <p id="code4"></p>
+  <p id="code5"></p>
+  <p id="code6"></p>
+  <p id="code7" style="padding-bottom: 10px;"></p>
+</div>
+<div id="codetrace-hide" class="panel-hide">
+  <img src="images/arrow_white_right.png" alt=">" title="show/hide codetrace panel"/>
+</div>
+<div id="left-bar"></div>
+<div id="right-bar"></div>
+<div id="media-controls">
+  <div id='speed-control'>slow
+    <div id='speed-input'></div>
+    fast
+  </div>
+  <span id="go-to-beginning" class="media-control-button" title="go to beginning" onclick="goToBeginning()"><img
+    src="images/goToBeginning.png" alt="go to beginning"></span>
+  <span id="previous" class="media-control-button" title="step backward" onclick="stepBackward()"><img
+    src="images/prevFrame.png" alt="previous frame"></span>
+  <span id="pause" class="media-control-button" title="pause" onclick="pause()"><img src="images/pause.png"
+                                                                                     alt="pause"></span>
+  <span id="play" class="media-control-button" title="play" onclick="play()"><img src="images/play.png"
+                                                                                  alt="play"></span>
+  <span id="next" class="media-control-button" title="step forward" onclick="stepForward()"><img
+    src="images/nextFrame.png" alt="next frame"></span>
+  <span id="go-to-end" class="media-control-button" title="go to end" onclick="goToEnd()"><img
+    src="images/goToEnd.png" alt="go to end"></span>
+  <div id="progress-bar" class="media-control-button"></div>
+</div>
+<div id='viz'></div>
+<div id='current-action' class='panel'></div>
+<div id='e-lecture' class='panel'></div>
+<div id="overlay" hidden></div>
+<div id="dropdown-temp-holder" hidden></div>
+<div id="popup" hidden>
+  <div id="popup-content"></div>
+  <span id="hide-popup" hidden>X <u>Close</u></span>
+</div>
+<div id="actions" class="panel">
+  <p id="examples" class="execAction">Example Graphs</p>
+  <p id="draw" onclick="drawGraph()">Draw Graph</p>
+  <p id="welshPowell" class="execAction" onclick="welshPowell()">WelshPowell</p>
+  <p id="bfs" class="execAction">BFS</p>
+  <p id="dfs" class="execAction">DFS</p>
+  <p id="kruskal" class="execAction" onclick="kruskal()">Kruskal</p>
+  <p id="dijkstra" class="execAction">Dijkstra</p>
+  <p id="parallel" class="execAction" onclick="parallel()">Parallel</p>
+  <p id="rlf" class="execAction" onclick="rlf()">RLF</p>
+</div>
+<div id="actions-hide" class="panel-hide">
+  <img src="images/arrow_white_right.png" alt=">" title="show/hide actions panel"/>
+</div>
+<div id="actions-extras">
+  <div class="examples action-menu-pullout" style="bottom: 287px;">
+    <div id="example1" class="execAction new-menu-option coloured-menu-option" onclick="example(K5)">
+      <p>K5</p>
+    </div>
+  </div>
+  <div class="bfs  action-menu-pullout" style="bottom: 200px;">
+    <div id="bfs-input" class="new-menu-option" style="float: left;">s = <input type="number" id="bfs-v"
+                                                                                title="Enter the source vertex"
+                                                                                autocomplete="off" min="0" max="99"
+                                                                                value="0" style=" height: 25px; "></div>
+    <div id="bfs-go" class="execAction coloured-menu-option" onclick="bfs()"
+         style="float: left; background-color: rgb(82, 188, 105); color: rgb(255, 255, 255);"><p class="btn">Go</p></div>
+    <div id="bfs-err" class="err" style="float: left;"></div>
+  </div>
+  <div class="dfs  action-menu-pullout" style="bottom: 170px;">
+    <div id="dfs-input" class="new-menu-option" style="float: left;">s = <input type="number" id="dfs-v"
+                                                                                title="Enter the source vertex"
+                                                                                autocomplete="off" min="0" max="99"
+                                                                                value="0" style=" height: 25px; "></div>
+    <div id="dfs-go" class="execAction coloured-menu-option" onclick="dfs()"
+         style="float: left; background-color: rgb(82, 188, 105); color: rgb(255, 255, 255);"><p class="btn">Go</p></div>
+    <div id="dfs-err" class="err" style="float: left;"></div>
+  </div>
+  <div class="dijkstra  action-menu-pullout" style="bottom: 120px;">
+    <div id="dijkstra-input" class="new-menu-option" style="float: left;">s = <input type="number" id="dijkstra-v"
+                                                                                     title="Enter the source vertex"
+                                                                                     autocomplete="off" min="0" max="99"
+                                                                                     value="0" style=" height: 25px; ">
+    </div>
+    <div id="dijkstra-go" class="execAction coloured-menu-option" onclick="dijkstra()"
+         style="float: left; background-color: rgb(82, 188, 105); color: rgb(255, 255, 255);"><p class="btn">Go</p></div>
+    <div id="dijkstra-err" class="err" style="float: left;"></div>
+  </div>
+
+  <div class="welshPowell action-menu-pullout">
+    <div id="welshPowell-err" class="err"></div>
+  </div>
+  <div class="dp action-menu-pullout">
+    <div id="welshPowell-err" class="err"></div>
+  </div>
+
+</div>
+<div id="drawgraph" class="overlays"></div>
+<div id="bottom-bar">
+  <a></a>
+</div>
+<script src="scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="scripts/d3.min.js"></script>
+<script type="text/javascript" src="scripts/viz-1.0.3.js"></script>
+<script type="text/javascript" src="scripts/graph_library-1.0.1.min.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
+
+</body>
+</html>
