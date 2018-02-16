@@ -1283,7 +1283,7 @@ var GraphColoring = function () {
             var x, y;
             var ColorNumber = 0;
             var VerticesInCommon = 0;
-            color[2] = 1;
+
             while (unprocessed > 0) {
                 x = MaxDegreeVertex();
                 ColorNumber++;
